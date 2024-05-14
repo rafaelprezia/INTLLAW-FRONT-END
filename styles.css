@@ -1,0 +1,39 @@
+body {
+  font-family: Arial, sans-serif;
+}
+
+.card {
+  border-radius: 15px;
+}
+
+.card-header {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.form-control {
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+#document-title {
+  border: none;
+  outline: none;
+}
+
+.submit-button {
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+.shadow {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.bg-light {
+  background-color: #f8f9fa !important;
+}
