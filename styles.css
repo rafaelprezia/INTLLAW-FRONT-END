@@ -2,10 +2,6 @@ body {
   font-family: Arial, sans-serif;
 }
 
-.card {
-  border-radius: 15px;
-}
-
 .card-header {
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
@@ -23,6 +19,12 @@ body {
 #document-title {
   border: none;
   outline: none;
+}
+
+.btn-link2 {
+  font-weight: 400;
+  color: #10222e;
+  text-decoration: none;
 }
 
 .submit-button {
@@ -60,4 +62,14 @@ body {
   flex-wrap: wrap;
   margin-right: -150px;
   margin-left: -150px;
+}
+
+.highlight {
+  background-color: rgb(230, 230, 10);
+}
+
+.btn-primary3 {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
 }

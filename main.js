@@ -100,3 +100,117 @@ $(document).ready(function () {
       `,
   });
 });
+
+$(document).ready(function () {
+  // Handle basic search form submission
+  $("#basic-search-form").submit(function (e) {
+    e.preventDefault();
+    const query = $("#basic-search").val();
+    performSearch({ query });
+  });
+
+  // Toggle advanced search section
+  $("#toggle-advanced-search").click(function () {
+    $("#advanced-search").slideToggle();
+  });
+
+  // Handle advanced search form submission
+  $("#search-form").submit(function (e) {
+    e.preventDefault();
+    const title = $("#search-title").val();
+    const date = $("#search-date").val();
+    const partiesInvolved = $("#search-parties").val();
+    const category = $("#search-category").val();
+    const tags = $("#search-tags").val();
+
+    const query = {};
+    if (title) query.title = title;
+    if (date) query.date = date;
+    if (partiesInvolved) query.partiesInvolved = partiesInvolved;
+    if (category) query.category = category;
+    if (tags) query.tags = tags;
+
+    performSearch(query);
+  });
+
+  function performSearch(query) {
+    $.ajax({
+      url: "http://localhost:3000/media/legal-cases",
+      type: "GET",
+      data: query,
+      success: function (response) {
+        displayResults(response, query.query);
+      },
+      error: function (error) {
+        console.error("Error:", error);
+        $("#search-results").html(
+          "<p class='text-danger'>An error occurred while fetching the results.</p>"
+        );
+      },
+    });
+  }
+
+  function displayResults(legalCases, searchTerm) {
+    const resultsContainer = $("#search-results");
+    resultsContainer.empty();
+
+    if (legalCases.length === 0) {
+      resultsContainer.html("<p class='text-warning'>No results found.</p>");
+      return;
+    }
+
+    legalCases.forEach((legalCase) => {
+      const highlightedTitle = highlightText(legalCase.title, searchTerm);
+      const highlightedPartiesInvolved = highlightText(
+        legalCase.partiesInvolved,
+        searchTerm
+      );
+      const highlightedCategory = highlightText(legalCase.category, searchTerm);
+      const highlightedTags = legalCase.tags
+        .map((tag) => highlightText(tag, searchTerm))
+        .join(", ");
+      const highlightedContent = highlightText(
+        stripHtml(legalCase.content),
+        searchTerm
+      );
+
+      const caseCard = `
+              <div class="card mb-3">
+                  <div class="card-header bg-secondary text-white">
+                      <h5>${highlightedTitle}</h5>
+                      <small>${new Date(
+                        legalCase.date
+                      ).toLocaleDateString()}</small>
+                  </div>
+                  <div class="card-body">
+                      <p><strong>Parties Involved:</strong> ${highlightedPartiesInvolved}</p>
+                      <p><strong>Category:</strong> ${highlightedCategory}</p>
+                      <p><strong>Tags:</strong> ${highlightedTags}</p>
+                      <div>${highlightedContent}</div>
+                      <button class="btn btn-primary3 btn-block mt-3 read-more-button" data-id="${
+                        legalCase._id
+                      }">Read More</button>
+                  </div>
+              </div>
+          `;
+      resultsContainer.append(caseCard);
+    });
+
+    $(".read-more-button").click(function () {
+      const id = $(this).data("id");
+      window.location.href = `case.html?id=${id}`;
+    });
+  }
+
+  function highlightText(text, searchTerm) {
+    if (!searchTerm) return text;
+    const regex = new RegExp(`(${searchTerm})`, "gi");
+    return text.replace(regex, '<span class="highlight">$1</span>');
+  }
+
+  function stripHtml(html) {
+    var tmp = document.createElement("DIV");
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || "";
+  }
+});
