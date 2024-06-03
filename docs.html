@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Legal Document Editor</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="bg-light">
+    <div class="container">
+      <div class="row2 justify-content-center">
+        <div class="col-lg-9 col-md-12 col-12">
+          <div class="card my-5 shadow">
+            <div class="card-header bg-primary2 text-white text-center">
+              <input
+                type="text"
+                id="document-title"
+                class="form-control form-control-lg"
+                placeholder="Enter Document Title"
+              />
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="document-date">Date:</label>
+                <input type="date" id="document-date" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label for="document-parties">Parties Involved:</label>
+                <input
+                  type="text"
+                  id="document-parties"
+                  class="form-control"
+                  placeholder="Enter Parties Involved"
+                />
+              </div>
+              <div class="form-group">
+                <label for="category">Category:</label>
+                <select id="category" class="form-control">
+                  <option value="Constitutions">Constitutions</option>
+                  <option value="Criminal">Criminal</option>
+                  <option value="Humanitarian">Humanitarian</option>
+                  <option value="Diplomacy">Diplomacy</option>
+                  <option value="Labour">Labour</option>
+                  <option value="Human Rights">Human Rights</option>
+                  <option value="Environmental">Environmental</option>
+                  <option value="Maritime">Maritime</option>
+                  <option value="Contracts">Contracts</option>
+                  <option value="Immigration">Immigration</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <textarea id="mytextarea">
+                            <h2>Section One</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+                            <h3>Subsection A</h3>
+                            <p>Egestas integer eget aliquet nibh praesent tristique magna sit amet...</p>
+                            <ol>
+                                <li>Item 1</li>
+                                <li>Item 2</li>
+                            </ol>
+                            <ul>
+                                <li>Bullet 1</li>
+                                <li>Bullet 2</li>
+                            </ul>
+                            <p class="signature-line">__________________________</p>
+                            <p class="signature-name">John Doe</p>
+                            </textarea
+                >
+              </div>
+              <div class="form-group">
+                <label for="tag-input">Add Tags:</label>
+                <input
+                  type="text"
+                  id="tag-input"
+                  class="form-control"
+                  placeholder="Enter a tag and press Enter"
+                />
+              </div>
+              <div class="form-group">
+                <div id="tags-container"></div>
+              </div>
+              <div class="form-group">
+                <button
+                  type="submit"
+                  id="submit-button"
+                  class="btn btn-primary2 btn-block"
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script
+      src="https://cdn.tiny.cloud/1/wthzlm91phiuyhju1ks68n0jdaszx3q4iauqchgit3bhq66y/tinymce/7/tinymce.min.js"
+      referrerpolicy="origin"
+    ></script>
+    <script src="main.js"></script>
+  </body>
+</html>

@@ -7,8 +7,6 @@ const FooterContainer = styled.footer`
     height: 15vh;
     background-color: #10222E;
     justify-content: center;
-    position: fixed; 
-    bottom: 0;
 `
 const InformationContainer = styled.section`
     display: flex;

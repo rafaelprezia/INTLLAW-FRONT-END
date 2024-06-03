@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const PrivacyPolicyContainer = styled.section`
     display: flex;
     background-color: #FFFFFF;
-    height:70vh;
+    min-height: 70vh;
 `
 
 function PrivacyPolicy(){

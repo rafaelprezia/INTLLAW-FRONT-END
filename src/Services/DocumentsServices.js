@@ -1,28 +1,49 @@
 import axios from "axios";
 
-const documentsAPI = axios.create({baseURL: "http://localhost:8000/"})
+const documentsAPI = axios.create({baseURL: "http://localhost:3000/media/legal-cases"})
 
-async function getDocuments(query) {
-    const response = await documentsAPI.get(`documents/${query}`)
+async function getDocuments(query, title, date, parties, category, tags) {
+    if (query) {
+        const response = await documentsAPI.get('/basicSearch', { params: { query } })
+        return response.data
+    }
+
+    const response = await documentsAPI.get('/advancedSearch', {
+        params: {
+            title,
+            date,
+            parties,
+            category,
+            tags
+        }
+    })
     return response.data
 }
 
 async function getDocumentsByID(id) {
-    const response = await documentsAPI.get(`document/${id}`)
+    const response = await documentsAPI.get(`/${id}`)
     return response.data
 }
 
-async function createDocument(documentData) {
-    try {
-        const response = await axios.post('http://localhost:8000/documents', documentData);
-        console.log('Document created: ', response.data);
-    } catch (error) {
-        console.error('Error: ', error);
-    }
+async function postDocuments(query) {
+    const response = await documentsAPI.get('', query)
+    return response.data
+}
+
+async function patchDocuments(id) {
+    const response = await documentsAPI.get(`/${id}`)
+    return response.data
+}
+
+async function deleteDocuments(id) {
+    const response = await documentsAPI.get(`/${id}`)
+    return response.data
 }
 
 export {
     getDocuments,
     getDocumentsByID,
-    createDocument
+    postDocuments,
+    patchDocuments,
+    deleteDocuments
 }

@@ -29,7 +29,7 @@ const Image = styled.img`
 
 function Card({ imageSrc, text }) {
     return (
-        <Link to={`/search/${text.toLowerCase()}`}>
+        <Link to={`/search?title=&date=&parties=&category=${text.toLowerCase()}&tags=`}>
             <CardContainer>
                 <Image src={imageSrc} alt='error'/>
                 <p>{text}</p>

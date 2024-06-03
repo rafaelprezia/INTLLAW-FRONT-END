@@ -1,24 +1,17 @@
 import styled from 'styled-components';
-import SearchBar from '../Components/SearchBar.js';
 import SearchDocuments from '../Components/SearchDocuments.js'
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getDocuments } from '../Services/DocumentsServices.js'
+import { getDocuments } from '../Services/DocumentsServices.js';
 
 const SearchContainer = styled.section`
     display: flex;
     flex-direction: column;
     align-items: stretch;
     width: 100%;
+    min-height: 70vh;
     background-color: #FFFFFF;
-    gap: 20px;
-    margin-bottom: 18vh;
 `
-const SearchBarContainer = styled.section`
-    display: flex;
-    justify-content: center;
-`
-
 const NoDocuments = styled.section`
     display: flex;
     justify-content: center;
@@ -26,7 +19,6 @@ const NoDocuments = styled.section`
     background-color: #FFFFFF;
     margin-bottom: 18vh;
 `
-
 const Text = styled.p`
     font-family: 'Inter';
     font-size: 36px;
@@ -34,44 +26,54 @@ const Text = styled.p`
     padding: 5px;
 `;
 
-function Search(){
+function Search() {
 
-    const { query } = useParams();
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
 
-    const [documents, setDocuments] = useState([])
+    const query = searchParams.get('query');
+    const title = searchParams.get('title');
+    const date = searchParams.get('date');
+    const parties = searchParams.get('parties');
+    const category = searchParams.get('category');
+    const tags = searchParams.get('tags');
+
+    const [documents, setDocuments] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        const fetchDocuments = async () => {
+            setLoading(true);
+            const fetchedDocuments = await getDocuments(query, title, date, parties, category, tags);
+            setDocuments(fetchedDocuments);
+            setLoading(false);
+        };
 
-        async function fetchDocuments(){
-            setDocuments(await getDocuments(query))
-        }
-
-        fetchDocuments()
-      }, [query])
+        fetchDocuments();
+    }, [query, title, date, parties, category, tags]);
 
     return (
         <SearchContainer>
-            <SearchBarContainer>
-                <SearchBar placeholder='Below is what our search engine found... Type here for a new search.'/>
-            </SearchBarContainer>
-            
-            { documents.length !== 0 ? documents.map( document => (
-            <SearchDocuments 
-                title={document.title} 
-                preview={truncateText(document.description, 700)} 
-                id={document._id}
-            />
-            )) : <NoDocuments><Text>No documents found</Text></NoDocuments>}
+
+            { loading ? (
+                <></>
+            ) : documents.length !== 0 ? (
+                documents.map(document => (
+                    <SearchDocuments 
+                        key={document._id}
+                        title={document.title} 
+                        date={document.date}
+                        partiesInvolved={document.partiesInvolved} 
+                        category={document.category} 
+                        tags={document.tags}  
+                        id={document._id}
+                    />
+                ))
+            ) : (
+                <NoDocuments><Text>No documents found</Text></NoDocuments>
+            )}
         </SearchContainer>
     );
-}
-
-function truncateText(text, maxLength) {
-    if (text.length <= maxLength) {
-        return text;
-    } else {
-        return text.substring(0, maxLength) + '...'; 
-    }
 }
 
 export default Search;

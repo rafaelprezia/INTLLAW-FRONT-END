@@ -3,13 +3,15 @@ import styled from 'styled-components';
 const TermsConditionsContainer = styled.section`
     display: flex;
     background-color: #FFFFFF;
-    height:70vh;
+    width: 100vw;
+    min-height: 70vh;
 `
 
 function TermsConditions(){
+      
     return (
         <TermsConditionsContainer>
-            <h1>Terms & Conditions</h1>
+            <h1>Terms and Conditions</h1>
         </TermsConditionsContainer>
     );
 }

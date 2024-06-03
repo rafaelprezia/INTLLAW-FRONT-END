@@ -16,9 +16,11 @@ const HomeContainer = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #FFFFFF;
-  height:70vh;
-  width: 100vw;
+  width: 100%;
+  min-height: 70vh;
   align-items: center;
+  min-height: 100vh; 
+  box-sizing: border-box;
 `
 
 const CardsContainer = styled.div`
@@ -29,6 +31,8 @@ const CardsContainer = styled.div`
   height: 100%;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
+  padding: 30px;
 `
 
 const RowsContainer = styled.section`
@@ -37,6 +41,7 @@ const RowsContainer = styled.section`
   width: 70%;
   height: 90%;
   justify-content: space-between;
+  gap: 30px;
 `
 
 const Row = styled.section`
@@ -48,7 +53,7 @@ const Row = styled.section`
 function Home() {
     return (
       <HomeContainer>
-        <SearchBar placeholder='What would you like to search for today? Type here or choose a category below.'/>
+        <SearchBar/>
         <CardsContainer>
           <RowsContainer>
           <Row>
