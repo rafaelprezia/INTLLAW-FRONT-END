@@ -3,6 +3,7 @@ import SearchDocuments from '../Components/SearchDocuments.js'
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getDocuments } from '../Services/DocumentsServices.js';
+import SearchBar from '../Components/SearchBar.js';
 
 const SearchContainer = styled.section`
     display: flex;
@@ -54,6 +55,7 @@ function Search() {
 
     return (
         <SearchContainer>
+            <SearchBar/>
 
             { loading ? (
                 <></>
@@ -67,6 +69,7 @@ function Search() {
                         category={document.category} 
                         tags={document.tags}  
                         id={document._id}
+                        content= {document.content}
                     />
                 ))
             ) : (

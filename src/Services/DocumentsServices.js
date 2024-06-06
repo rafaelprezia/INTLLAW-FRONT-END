@@ -25,18 +25,18 @@ async function getDocumentsByID(id) {
     return response.data
 }
 
-async function postDocuments(query) {
-    const response = await documentsAPI.get('', query)
-    return response.data
-}
+async function postDocuments(documentData) {
+    const response = await documentsAPI.post('', documentData);
+    return response.data;
+  }
 
 async function patchDocuments(id) {
-    const response = await documentsAPI.get(`/${id}`)
+    const response = await documentsAPI.patch(`/${id}`)
     return response.data
 }
 
 async function deleteDocuments(id) {
-    const response = await documentsAPI.get(`/${id}`)
+    const response = await documentsAPI.delete(`/${id}`)
     return response.data
 }
 
