@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import SearchDocuments from '../Components/SearchDocuments.js'
+import SearchDocuments from '../Components/SearchDocuments.js';
 import { useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { getDocuments } from '../Services/DocumentsServices.js';
 import SearchBar from '../Components/SearchBar.js';
 
@@ -12,14 +12,16 @@ const SearchContainer = styled.section`
     width: 100%;
     min-height: 70vh;
     background-color: #FFFFFF;
-`
+`;
+
 const NoDocuments = styled.section`
     display: flex;
     justify-content: center;
     width: 100%;
     background-color: #FFFFFF;
     margin-bottom: 18vh;
-`
+`;
+
 const Text = styled.p`
     font-family: 'Inter';
     font-size: 36px;
@@ -28,7 +30,6 @@ const Text = styled.p`
 `;
 
 function Search() {
-
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
 
@@ -42,22 +43,26 @@ function Search() {
     const [documents, setDocuments] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchDocuments = async () => {
-            setLoading(true);
-            const fetchedDocuments = await getDocuments(query, title, date, parties, category, tags);
-            setDocuments(fetchedDocuments);
-            setLoading(false);
-        };
-
-        fetchDocuments();
+    const fetchDocuments = useCallback(async () => {
+        setLoading(true);
+        const fetchedDocuments = await getDocuments(query, title, date, parties, category, tags);
+        setDocuments(fetchedDocuments);
+        setLoading(false);
     }, [query, title, date, parties, category, tags]);
+
+    useEffect(() => {
+        fetchDocuments();
+    }, [fetchDocuments]);
+
+    const handleDocumentDeleted = () => {
+        fetchDocuments();
+    };
 
     return (
         <SearchContainer>
-            <SearchBar/>
+            <SearchBar />
 
-            { loading ? (
+            {loading ? (
                 <></>
             ) : documents.length !== 0 ? (
                 documents.map(document => (
@@ -69,7 +74,8 @@ function Search() {
                         category={document.category} 
                         tags={document.tags}  
                         id={document._id}
-                        content= {document.content}
+                        content={document.content}
+                        onDocumentDeleted={handleDocumentDeleted}
                     />
                 ))
             ) : (
