@@ -13,6 +13,7 @@ import RoutesDocuments from './Routes/RoutesDocuments.js';
 import Header from './Components/Header.js';
 import Footer from './Components/Footer.js';
 import RoutesCreateDocuments from './Routes/RoutesCreateDocuments.js';
+import RoutesUpdateDocument from './Routes/RoutesUpdateDocument.js';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -54,7 +55,8 @@ root.render(
         <Route path='/terms&conditions' element={<TermsConditions/>}/>
         <Route path='/search/document/:id' element={<RoutesDocuments/>}/>
         <Route path='/search/*' element={<Search/>}/>
-        <Route path='/teste/create' element={<RoutesCreateDocuments/>}/>
+        <Route path='/document/create' element={<RoutesCreateDocuments/>}/>
+        <Route path='/document/update/:id' element={<RoutesUpdateDocument/>}/>
       </Routes>
       <Footer/>
     </BrowserRouter>

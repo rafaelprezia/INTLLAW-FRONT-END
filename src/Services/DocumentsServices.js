@@ -30,8 +30,8 @@ async function postDocuments(documentData) {
     return response.data;
   }
 
-async function patchDocuments(id) {
-    const response = await documentsAPI.patch(`/${id}`)
+async function patchDocuments(id, documentData) {
+    const response = await documentsAPI.patch(`/${id}`, documentData)
     return response.data
 }
 

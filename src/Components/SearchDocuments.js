@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card, Button } from 'react-bootstrap';
 import StyledTags from './StyledTags.js';
@@ -53,17 +53,21 @@ const ReadMoreButton = styled(Button)`
     }
 `;
 
-const handleEditClick = () => {
-    console.log("Edit icon clicked");
-  };
-  
-  const handleDeleteClick = (id) => {
-    deleteDocuments(id);
-  };
+
 
 function SearchDocuments({title, date, partiesInvolved, category, tags, id, content}){
 
     const Usuario = true;
+
+    const navigate = useNavigate();
+
+    const handleEditClick = () => {
+        navigate(`/document/update/${id}`);
+      };
+      
+      const handleDeleteClick = () => {
+        deleteDocuments(id);
+      };
   
     return(
             <StyledCard>
@@ -74,8 +78,8 @@ function SearchDocuments({title, date, partiesInvolved, category, tags, id, cont
                     </StyledHeaderContent>
                     {Usuario ? (
                         <StyledHeaderIcons>
-                            <FiEdit style={{ cursor: 'pointer' }} onClick={() => handleEditClick}/>
-                            <MdDelete style={{ cursor: 'pointer' }} onClick={() => handleDeleteClick(id)}/>
+                            <FiEdit style={{ cursor: 'pointer' }} onClick={() => handleEditClick()}/>
+                            <MdDelete style={{ cursor: 'pointer' }} onClick={() => handleDeleteClick()}/>
                         </StyledHeaderIcons>
                     ) : (
                         <></>
